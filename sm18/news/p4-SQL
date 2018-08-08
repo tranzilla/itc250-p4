@@ -1,0 +1,38 @@
+-- create table sm18_categoriesP4 to display the 3 categories 
+DROP TABLE IF EXISTS `sm18_categoriesP4`;
+CREATE TABLE `sm18_categoriesP4` (
+  `CategoryID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Category` varchar(255) DEFAULT '',
+  `Description` text,
+  PRIMARY KEY (`CategoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sm18_categoriesP4` (`CategoryID`, `Category`, `Description`) VALUES
+(1,	'Health',	'Latest news in Health'),
+(2,	'Sports',	'Latest news in Sports'),
+(3,	'Technology',	    'Latest news in Techology');
+
+-- create table sm18_feedsP4 to link URL, and description to RSS 
+DROP TABLE IF EXISTS `sm18_feedsP4`;
+CREATE TABLE `sm18_feedsP4` (
+  `FeedID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `CategoryID` int(10) unsigned DEFAULT '0',
+  `FeedURL` varchar(255) DEFAULT '',
+  `Title` varchar(255) DEFAULT '',
+  `Description` text,
+  PRIMARY KEY (`FeedID`),
+  KEY `CategoryID` (`CategoryID`),
+  CONSTRAINT `sm18_feedsP4_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `sm18_categoriesP4` (`CategoryID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- insert rss feeds
+INSERT INTO `sm18_feedsP4` (`FeedID`, `CategoryID`, `FeedURL`, `Title`, `Description`) VALUES
+(1,	1,	'https://www.seattletimes.com/wellness/feed/',	'The Seattle Times Wellness – The Seattle Times',	'Pop cultural depictions of mental illness may do more harm than good'),
+(2,	1,	'http://www.who.int/feeds/entity/hac/en/rss.xml',	'Emergencies and disasters',	'Latest news and updates on public health emergencies around the world'),
+(3,	1,	'http://rss.cnn.com/rss/cnn_health.rss',	'CNN - Health',	'Find all health related news'),
+(4,	2,	'https://www.si.com/rss/si_nfl.rss',	'NFL',	'The latest news and headlines from HTTPS://WWW.SI.COM'),
+(5,	2,	'https://www.cbssports.com/rss/headlines/mlb/',	'CBS Sports- MLB',	'The latest sports news from CBSSports.com'),
+(6,	2,	'https://www.seattlepi.com/sports/huskies/collectionRss/Sports-Huskies-Heds-9770.php',	'UW Huskies News',	'Washington Huskies News'),
+(7,	3,	'https://www.technologyreview.com/stories.rss',	'New on MIT Technology Review',	'MIT Technology Review'),
+(8,	3,	'https://www.wired.com/feed/category/gear/latest/rss',	'Wired - Gear',	'The Latest Tech News on Gear'),
+(9,	3,	'https://www.techrepublic.com/rssfeeds/topic/developer/',	'Tech Republic - Developer',	'The Latest Tech News on Developer');
